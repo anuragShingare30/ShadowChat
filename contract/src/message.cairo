@@ -26,7 +26,6 @@ pub mod MessageStorage {
     #[storage]
     struct Storage {
         messages: Map<ContractAddress, Vec<ByteArray>>,
-        message_counter: Map<ContractAddress, u64>,
     }
 
     // Implement the contract interface
@@ -41,15 +40,6 @@ pub mod MessageStorage {
 
             // Append the message to the recipient's message vector
             recipient_messages.push(message);
-            
-            // Get the current counter for the recipient
-            let current_index = self.message_counter.read(recipient);
-            
-            // Store the message
-            self.messages.write((recipient, current_index), message);
-            
-            // Increment the counter
-            self.message_counter.write(recipient, current_index + 1);
         }
 
         // Get a specific message

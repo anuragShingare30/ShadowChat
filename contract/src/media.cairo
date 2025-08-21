@@ -49,12 +49,14 @@ pub mod MediaSharing {
             
             self.media_counter.write(recipient, current_index + 1);
         }
+
         fn get_media(self: @ContractState, recipient: ContractAddress, index: u64) -> MediaItem {
             let total_media = self.media_counter.read(recipient);
             assert(index < total_media, 'Index out of bounds');
             
             self.media_count.read((recipient, index))
         }
+        
         fn get_all_media(self: @ContractState, recipient: ContractAddress) -> Array<MediaItem> {
             let total_media = self.media_counter.read(recipient);
             
